@@ -67,37 +67,7 @@ const Home = () => {
       <Canvas 
       className='bg-transparent w-full h-screen'
               camera={{near: 0.01, far: 100,position: [10, 0, 5]}}>
-        <MyCamera />
-        {/* <Suspense fallback={<Loader/>}>
-        
-
-            <ambientLight/>
-            <directionalLight
-            position={[10, 50, -30]}
-            intensity={1}
-            shadow-bias={-0.0001}
-            shadow-mapSize={[4096, 4096]}
-            shadow-camera-left={-300}
-            shadow-camera-right={300}
-            shadow-camera-top={300}
-            shadow-camera-bottom={-300}
-            castShadow
-          />
-            <Physics
-          gravity={[0, -90, 0]}
-          timeStep={'vary'}
-        >
-
-             <ParisBis
-              position = {mapPosition}
-              scale = {mapScale}
-             />
-             
-
-        </Physics> */}
-
-
-        {/* </Suspense> */}
+       
 
       </Canvas>
 
