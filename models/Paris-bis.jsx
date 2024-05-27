@@ -98,9 +98,6 @@ export function ParisBis(props) {
         <mesh castShadow receiveShadow geometry={nodes.N_Trocadero_M_Cmn_MainColor_Detail_0.geometry} material={materials.M_Cmn_MainColor_Detail} />
         <mesh castShadow receiveShadow geometry={nodes.N_Trocadero_M_Mobp1_RoadColor_0.geometry} material={materials.M_Mobp1_RoadColor} />
         <mesh castShadow receiveShadow geometry={nodes.N_Trocadero_Water_M_Mobp1_Water_0.geometry} material={materials.M_Mobp1_Water} />
-        <RigidBody type="fixed" colliders="trimesh" name="terrain">
-        <mesh castShadow receiveShadow geometry={nodes.ShadowCollision_M_Cmn_ShadowCollision_0.geometry} material={materials.M_Cmn_ShadowCollision} position={[0, 0.244, 0]} />
-        </RigidBody>
       </group>
     </group>
   )
