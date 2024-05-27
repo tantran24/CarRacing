@@ -1,11 +1,12 @@
 import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas } from '@react-three/fiber'
 import { ParisBis } from '../models/Paris-bis'
+import {Car} from '../models/Car'
 import Loader from '../components/Loader'
-import { Physics } from '@react-three/rapier'
-import {  Island } from "../models/Island";
+//import { Physics } from '@react-three/rapier'
 import { PerspectiveCamera, OrbitControls } from '@react-three/drei'
 import { useHelper } from '@react-three/drei/native';
+import { Physics, usePlane } from "@react-three/cannon";
 
 import * as THREE from 'three'
 import {
@@ -33,44 +34,14 @@ const MyCamera = () => {
 
 const GamePlay = () => {
 
-  const adjustMapForScreenSize = () => {
-    let screenScale = null;
-    let screenPosition = [0, -60.5, -43];
-
-    if (window.innerWidth < 768) {
-      screenScale = [0.9, 0.9, 0.9];
-    } else {
-      screen = [1, 1, 1];
-    }
-    return [screenScale, screenPosition];
-  }
-
-  const adjustIslandForScreenSize = () => {
-    let screenScale, screenPosition;
-
-    if (window.innerWidth < 768) {
-      screenScale = [0.9, 0.9, 0.9];
-      screenPosition = [0, -6.5, -43.4];
-    } else {
-      screenScale = [1, 1, 1];
-      screenPosition = [0, -6.5, -43.4];
-    }
-
-    return [screenScale, screenPosition];
-  };
-  const [islandScale, islandPosition] = adjustIslandForScreenSize();
-  const [mapScale, mapPosition] = adjustMapForScreenSize();
-
-  const [isRotating, setIsRotating] = useState(false);
-  const [currentStage, setCurrentStage] = useState(1);
+  
 
   return (
     <section className='w-full h-screen relative'>
 
       <Canvas 
-      className='bg-transparent w-full h-screen'
-              camera={{near: 0.01, far: 100,position: [10, 0, 5]}}>
-        <MyCamera />
+      className='bg-transparent w-full h-screen'>
+      
         <Suspense fallback={<Loader/>}>
         
 
@@ -86,18 +57,11 @@ const GamePlay = () => {
             shadow-camera-bottom={-300}
             castShadow
           />
-            <Physics
-          gravity={[0, -90, 0]}
-          timeStep={'vary'}
-        >
-
-             <ParisBis
-              position = {mapPosition}
-              scale = {mapScale}
-             />
-             
-
-        </Physics> 
+            <ParisBis position={[0, 0, 0]} />
+          <Physics broadphase="SAP" contactEquationRelaxation={4} friction={1e-3} allowSleep>
+            <Plane position={[0, -1.6, 0]} rotation={[-Math.PI / 2, 0, 0]} userData={{ id: 'floor' }} />
+            <Car speed={0.01} angularVelocity={[0, 0.5, 0]} modelPath='../src/assets/3D/vino/scene.gltf' />
+          </Physics>
 
 
         </Suspense>
@@ -109,3 +73,8 @@ const GamePlay = () => {
 }
 
 export default GamePlay
+
+function Plane(props) {
+  const [ref] = usePlane(() => ({ type: 'Static', material: 'ground', ...props }))
+  return null
+}

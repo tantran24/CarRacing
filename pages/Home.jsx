@@ -30,49 +30,7 @@ const MyCamera = () => {
 
 const Home = () => {
 
-  const adjustMapForScreenSize = () => {
-    let screenScale = null;
-    let screenPosition = [0, -60.5, -43];
 
-    if (window.innerWidth < 768) {
-      screenScale = [0.9, 0.9, 0.9];
-    } else {
-      screen = [1, 1, 1];
-    }
-    return [screenScale, screenPosition];
-  }
-
-  const adjustIslandForScreenSize = () => {
-    let screenScale, screenPosition;
-
-    if (window.innerWidth < 768) {
-      screenScale = [0.9, 0.9, 0.9];
-      screenPosition = [0, -6.5, -43.4];
-    } else {
-      screenScale = [1, 1, 1];
-      screenPosition = [0, -6.5, -43.4];
-    }
-
-    return [screenScale, screenPosition];
-  };
-  const [islandScale, islandPosition] = adjustIslandForScreenSize();
-  const [mapScale, mapPosition] = adjustMapForScreenSize();
-
-  const [isRotating, setIsRotating] = useState(false);
-  const [currentStage, setCurrentStage] = useState(1);
-
-  return (
-    <section className='w-full h-screen relative'>
-
-      <Canvas 
-      className='bg-transparent w-full h-screen'
-              camera={{near: 0.01, far: 100,position: [10, 0, 5]}}>
-       
-
-      </Canvas>
-
-    </section>
-  )
 }
 
 export default Home
