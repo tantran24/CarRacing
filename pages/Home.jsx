@@ -3,7 +3,6 @@ import { Canvas } from '@react-three/fiber'
 import { ParisBis } from '../models/Paris-bis'
 import Loader from '../components/Loader'
 import { Physics } from '@react-three/rapier'
-import {  Island } from "../models/Island";
 import { PerspectiveCamera} from '@react-three/drei'
 import { useHelper } from '@react-three/drei/native';
 

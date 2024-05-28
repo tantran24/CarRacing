@@ -58,6 +58,7 @@ const GamePlay = () => {
             castShadow
           />
             <ParisBis position={[0, 0, 0]} />
+            
           <Physics broadphase="SAP" contactEquationRelaxation={4} friction={1e-3} allowSleep>
             <Plane position={[0, -1.6, 0]} rotation={[-Math.PI / 2, 0, 0]} userData={{ id: 'floor' }} />
             <Car speed={0.01} angularVelocity={[0, 0.5, 0]} modelPath='../src/assets/3D/vino/scene.gltf' />

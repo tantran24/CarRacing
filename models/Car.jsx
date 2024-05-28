@@ -28,7 +28,7 @@ export function Car({ speed, modelPath }) {
   return (
     
     <mesh ref={chassisRef}>
-      <PerspectiveCamera ref={camera} fov={75} position={[0, 1, 1]} makeDefault></PerspectiveCamera>
+      <PerspectiveCamera ref={camera} fov={75} position={[0, 1, 1]} rotation={ rotation} makeDefault></PerspectiveCamera>
       <primitive object={car.scene} scale={0.05} />
     </mesh>
   );
