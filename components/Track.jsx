@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import * as THREE from "three";
 
 export function Track() {
-    const { scene } = useGLTF("../src/assets/3D/racetrack_test.glb");
+    const { scene } = useGLTF("../src/assets/3D/simple_track.glb");
     return <primitive object={scene} />;
 }
 

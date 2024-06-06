@@ -37,8 +37,8 @@ export const useControls = (vehicleApi, chassisApi) => {
             console.log("forward");
             // vehicleApi.applyEngineForce(150, 2);
             // vehicleApi.applyEngineForce(150, 3);
-            vehicleApi.applyEngineForce(300, 2);
-            vehicleApi.applyEngineForce(300, 3);
+            vehicleApi.applyEngineForce(1000, 2);
+            vehicleApi.applyEngineForce(1000, 3);
         } else if (controls.s) {
             vehicleApi.applyEngineForce(-600, 2);
             vehicleApi.applyEngineForce(-600, 3);
