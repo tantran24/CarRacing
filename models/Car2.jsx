@@ -133,5 +133,3 @@ export function Car2(thirdPerson) {
         </group>
     );
 }
-{
-}
