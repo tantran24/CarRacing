@@ -10,6 +10,8 @@ import { Ground } from "../components/Ground";
 import { Box } from "./Box";
 import { usePlane } from "@react-three/cannon";
 import { ParisBis } from "../models/Paris-bis";
+import { Circuit } from "../models/Circuit";
+
 import { Track } from "./Track";
 // import { Wall } from "./Wall";
 // import { MountainEnvironment } from "./MountainEnvironment";
@@ -27,9 +29,10 @@ export function Scene() {
             {/* <MountainEnvironment /> */}
             <Ground />
             {/* <ParisBis /> */}
-            <Track position={[0, 0, 0]} scale={[1, 1, 1]} />
-            <Box position={[2, 0.5, -2]} />
-            <Box position={[2.5, 0.5, 1]} />
+            <Circuit/>
+            {/* <Track position={[0, 0, 0]} scale={[1, 1, 1]} /> */}
+            {/* <Box position={[2, 0.5, -2]} />
+            <Box position={[2.5, 0.5, 1]} /> */}
             {/* <Box position={[7, 0.5, 40]} /> */}
             {/* <Wall position={[8, 0.5, 40]} size={[1, 1, 1]} /> */}
             {/* <Car
@@ -37,7 +40,9 @@ export function Scene() {
                 angularVelocity={[0, 0.5, 0]}
                 modelPath="../src/assets/3D/vino/scene.gltf"
             /> */}
-            <Car2 thirdPerson={thirdPerson} />
+            <Car2 
+            thirdPerson={thirdPerson}
+             />
         </Suspense>
     );
 }

@@ -16,7 +16,7 @@ export function Ground(props) {
             <meshStandardMaterial
                 transparent={true}
                 color={"blue"}
-                opacity={0.2}
+                opacity={0}
             />
         </mesh>
     );
