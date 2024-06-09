@@ -21,14 +21,11 @@ export function Car({ speed, modelPath }) {
     args: chassisBodyArgs,
   }));
 
-  useFrame(() => {
-    camera.current.lookAt(chassisRef.current.position)
-  })
 
   return (
-    
+
     <mesh ref={chassisRef}>
-      <PerspectiveCamera ref={camera} fov={75} position={[0, 1, 1]} rotation={ rotation} makeDefault></PerspectiveCamera>
+      <OrbitControls></OrbitControls>
       <primitive object={car.scene} scale={0.05} />
     </mesh>
   );
