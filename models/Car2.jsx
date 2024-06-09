@@ -10,7 +10,6 @@ import * as THREE from "three";
 import { BoxGeometry, MeshStandardMaterial, Mesh } from "three";
 
 export function Car2(thirdPerson) {
-
     let mesh = useLoader(GLTFLoader, "../src/assets/3D/car.glb").scene;
     mesh.scale.set(0.001, 0.001, 0.001);
     mesh.position.set(0.37, -0.05, 0.05);
@@ -22,7 +21,7 @@ export function Car2(thirdPerson) {
     const width = size.x;
     const height = size.y;
     const front = size.z;
-    const wheelRadius = 0.25*0.1;
+    const wheelRadius = 0.25 * 0.1;
 
     const chassisBodyArgs = [width, height, front * 2];
 
@@ -35,7 +34,12 @@ export function Car2(thirdPerson) {
         useRef(null)
     );
 
-    const [wheels, wheelInfos] = useWheels(width*2.5, height, front, wheelRadius);
+    const [wheels, wheelInfos] = useWheels(
+        width * 2.5,
+        height,
+        front,
+        wheelRadius
+    );
 
     const [vehicle, vehicleApi] = useRaycastVehicle(
         () => ({
@@ -48,42 +52,38 @@ export function Car2(thirdPerson) {
 
     useControls(vehicleApi, chassisApi);
 
-    useFrame((state) => {
-        if (!thirdPerson) return;
+    // useFrame((state) => {
+    //     if (!thirdPerson) return;
 
-        // Lấy vị trí hiện tại của xe
-        let position = new THREE.Vector3();
-        position.setFromMatrixPosition(chassisBody.current.matrixWorld);
+    //     // Lấy vị trí hiện tại của xe
+    //     let position = new THREE.Vector3();
+    //     position.setFromMatrixPosition(chassisBody.current.matrixWorld);
 
-        // Lấy hướng quay hiện tại của xe
-        let quaternion = new THREE.Quaternion();
-        quaternion.setFromRotationMatrix(chassisBody.current.matrixWorld);
+    //     // Lấy hướng quay hiện tại của xe
+    //     let quaternion = new THREE.Quaternion();
+    //     quaternion.setFromRotationMatrix(chassisBody.current.matrixWorld);
 
-        // biến đổi hướng cố định theo hướng quay của xe
-        let wDir = new THREE.Vector3(0, 0, -10); // Hướng về phía trước dọc theo trục z
-        wDir.applyQuaternion(quaternion);
-        wDir.normalize();
+    //     // biến đổi hướng cố định theo hướng quay của xe
+    //     let wDir = new THREE.Vector3(0, 0, -10); // Hướng về phía trước dọc theo trục z
+    //     wDir.applyQuaternion(quaternion);
+    //     wDir.normalize();
 
-        // Tính toán vị trí của camera sao cho luôn theo sau xe
-        let cameraOffset = wDir
-            .clone()
-            .multiplyScalar(-1)
-            .add(new THREE.Vector3(0, 0.3, 0)); // Offset: 10 đơn vị phía sau, 3 đơn vị chiều cao
-        let cameraPosition = position.clone().add(cameraOffset);
+    //     // Tính toán vị trí của camera sao cho luôn theo sau xe
+    //     let cameraOffset = wDir
+    //         .clone()
+    //         .multiplyScalar(-1)
+    //         .add(new THREE.Vector3(0, 0.3, 0)); // Offset: 10 đơn vị phía sau, 3 đơn vị chiều cao
+    //     let cameraPosition = position.clone().add(cameraOffset);
 
-        // Cập nhật vị trí và hướng của camera
-        state.camera.position.copy(cameraPosition);
-        state.camera.lookAt(position);
-    });
+    //     // Cập nhật vị trí và hướng của camera
+    //     state.camera.position.copy(cameraPosition);
+    //     state.camera.lookAt(position);
+    // });
 
     return (
         <group ref={vehicle}>
-            <group ref={chassisBody} name="chassisBody" 
->
-                <primitive
-                    object={mesh}
-                    rotation-y={Math.PI}
-                />
+            <group ref={chassisBody} name="chassisBody">
+                <primitive object={mesh} rotation-y={Math.PI} />
             </group>
 
             <WheelDebug wheelRef={wheels[0]} radius={wheelRadius} />
