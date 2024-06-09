@@ -7,33 +7,35 @@ import { WheelDebug } from "../components/WheelDebug";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from "three";
+import { BoxGeometry, MeshStandardMaterial, Mesh } from "three";
 
 export function Car2(thirdPerson) {
-    // let mesh = useGLTF("../src/assets/3D/car.glb");
-    let mesh = useLoader(GLTFLoader, "../src/assets/3D/car.glb").scene;
 
-    // const position = [-2, 2, 1, 6];
+    let mesh = useLoader(GLTFLoader, "../src/assets/3D/car.glb").scene;
+    mesh.scale.set(0.001, 0.001, 0.001);
+    mesh.position.set(0.37, -0.05, 0.05);
     const position = [0, 0, 0];
-    // const width = 0.15;
-    // const height = 0.07;
-    // const front = 0.15;
-    const width = 0.9;
-    const height = 0.35;
-    const front = 1.2;
-    const wheelRadius = 0.25;
+
+    let box = new THREE.Box3().setFromObject(mesh);
+    let size = box.getSize(new THREE.Vector3());
+    let center = box.getCenter(new THREE.Vector3());
+    const width = size.x;
+    const height = size.y;
+    const front = size.z;
+    const wheelRadius = 0.25*0.1;
 
     const chassisBodyArgs = [width, height, front * 2];
+
     const [chassisBody, chassisApi] = useBox(
         () => ({
             allowSleep: false,
             args: chassisBodyArgs,
             mass: 300,
-            position,
         }),
         useRef(null)
     );
 
-    const [wheels, wheelInfos] = useWheels(width, height, front, wheelRadius);
+    const [wheels, wheelInfos] = useWheels(width*2.5, height, front, wheelRadius);
 
     const [vehicle, vehicleApi] = useRaycastVehicle(
         () => ({
@@ -65,8 +67,8 @@ export function Car2(thirdPerson) {
         // Tính toán vị trí của camera sao cho luôn theo sau xe
         let cameraOffset = wDir
             .clone()
-            .multiplyScalar(-10)
-            .add(new THREE.Vector3(0, 2.8, 0)); // Offset: 10 đơn vị phía sau, 3 đơn vị chiều cao
+            .multiplyScalar(-1)
+            .add(new THREE.Vector3(0, 0.3, 0)); // Offset: 10 đơn vị phía sau, 3 đơn vị chiều cao
         let cameraPosition = position.clone().add(cameraOffset);
 
         // Cập nhật vị trí và hướng của camera
@@ -74,57 +76,15 @@ export function Car2(thirdPerson) {
         state.camera.lookAt(position);
     });
 
-    // useFrame((state) => {
-    //     if (!thirdPerson) return;
-
-    //     let position = new THREE.Vector3(0, 0, 0);
-    //     position.setFromMatrixPosition(chassisBody.current.matrixWorld);
-
-    //     let quaternion = new THREE.Quaternion(0, 0, 0, 0);
-    //     quaternion.setFromRotationMatrix(chassisBody.current.matrixWorld);
-
-    //     let wDir = new THREE.Vector3(0, 0, 1);
-    //     wDir.applyQuaternion(quaternion);
-    //     wDir.normalize();
-
-    //     let cameraPosition = position
-    //         .clone()
-    //         .add(
-    //             wDir.clone().multiplyScalar(1).add(new THREE.Vector3(0, 3, 12))
-    //         );
-
-    //     wDir.add(new THREE.Vector3(0, 0.2, 0));
-    //     state.camera.position.copy(cameraPosition);
-    //     state.camera.lookAt(position);
-    // });
-
-    useEffect(() => {
-        if (!mesh) return;
-        // Adjusting the scale of the loaded model
-        mesh.scale.set(0.01, 0.01, 0.01);
-
-        // Setting the position of the mesh to align with the physics body
-        mesh.position.set(3.65, -0.2, 0.7);
-    }, [mesh]);
-
-    // group chassicBody & wheel to control => vehicle
     return (
         <group ref={vehicle}>
-            <group ref={chassisBody} name="chassisBody">
+            <group ref={chassisBody} name="chassisBody" 
+>
                 <primitive
                     object={mesh}
                     rotation-y={Math.PI}
-                    position={[0, 0, 0]}
                 />
             </group>
-            {/* <mesh ref={chassisBody}>
-                <meshBasicMaterial
-                    transparent={true}
-                    opacity={0.3}
-                    color={"red"}
-                />
-                <boxGeometry args={chassisBodyArgs} />
-            </mesh> */}
 
             <WheelDebug wheelRef={wheels[0]} radius={wheelRadius} />
             <WheelDebug wheelRef={wheels[1]} radius={wheelRadius} />
