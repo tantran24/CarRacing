@@ -10,6 +10,8 @@ import { Ground } from "../components/Ground";
 import { Box } from "./Box";
 import { usePlane } from "@react-three/cannon";
 import { ParisBis } from "../models/Paris-bis";
+import { Ramp } from "../models/Ramp";
+
 import { Circuit } from "../models/Circuit";
 import { VehicleContext } from "../context/Vehicles";
 import { useBox } from "@react-three/cannon";
@@ -53,7 +55,6 @@ export function Scene() {
                     /> */}
                     <Car2 
                     thirdPerson={thirdPerson}
-                    // vehicleAPIs={vehicleAPIs}
                     addVehicleAPI={addVehicleAPI} 
                     addchassisBody={addchassisBody}
                     chassisBodies={chassisBodies}              
@@ -64,6 +65,8 @@ export function Scene() {
                     <Box type="nerf" position={[7.16, 0.05, 2]}/>
                     <Box type="buff" position={[0, 0.05, 5]}/>
                     <Box type="nerf" position={[2.4, 0.05, 4]}/>
+                    <Ramp position={[7, 0, 1.62]} scale={[0.5, 0.5, 0.5]}
+                    />
 
 
 

@@ -31,7 +31,7 @@ export function Car2({thirdPerson, addVehicleAPI, addchassisBody, chassisBodies}
         () => ({
             allowSleep: false,
             args: chassisBodyArgs,
-            mass: 300,
+            mass: 200,
         }),
         useRef(null)
     );
@@ -61,10 +61,7 @@ export function Car2({thirdPerson, addVehicleAPI, addchassisBody, chassisBodies}
 //                 position.setFromMatrixPosition(chassisBodies[0].current.matrixWorld);
 //                 console.log("EEE",position);
             
-//                 position.setFromMatrixPosition(chassisBody.current.matrixWorld);
-//                 console.log("FFF",position);
 //             }
-//        console.log("EEEEEEEE",vehicle.position);
 //     })
 
     useControls(vehicleApi, chassisApi);
@@ -73,16 +70,16 @@ export function Car2({thirdPerson, addVehicleAPI, addchassisBody, chassisBodies}
     //     if (!thirdPerson) return;
 
     //     // Lấy vị trí hiện tại của xe
-    //     let position = new THREE.Vector3();
+    //     let position = new THREE.Vector3(0, 0, 0);
     //     position.setFromMatrixPosition(chassisBody.current.matrixWorld);
-    //     console.log(position);
+    //     // console.log(position);
 
     //     // Lấy hướng quay hiện tại của xe
-    //     let quaternion = new THREE.Quaternion();
+    //     let quaternion = new THREE.Quaternion(0, 0, 0, 0);
     //     quaternion.setFromRotationMatrix(chassisBody.current.matrixWorld);
 
     //     // biến đổi hướng cố định theo hướng quay của xe
-    //     let wDir = new THREE.Vector3(0, 0, -10); // Hướng về phía trước dọc theo trục z
+    //     let wDir = new THREE.Vector3(0, 0, -1); // Hướng về phía trước dọc theo trục z
     //     wDir.applyQuaternion(quaternion);
     //     wDir.normalize();
 
@@ -90,7 +87,7 @@ export function Car2({thirdPerson, addVehicleAPI, addchassisBody, chassisBodies}
     //     let cameraOffset = wDir
     //         .clone()
     //         .multiplyScalar(-1)
-    //         .add(new THREE.Vector3(0, 0.7, 1)); // Offset: 10 đơn vị phía sau, 3 đơn vị chiều cao
+    //         .add(new THREE.Vector3(0, 0.3, 0)); // Offset: 10 đơn vị phía sau, 3 đơn vị chiều cao
     //     let cameraPosition = position.clone().add(cameraOffset);
 
     //     // Cập nhật vị trí và hướng của camera
