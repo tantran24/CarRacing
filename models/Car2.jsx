@@ -9,7 +9,8 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from "three";
 import { BoxGeometry, MeshStandardMaterial, Mesh } from "three";
 
-export function Car2(thirdPerson) {
+
+export function Car2({thirdPerson, addVehicleAPI, addchassisBody, chassisBodies}) {
 
     let mesh = useLoader(GLTFLoader, "../src/assets/3D/car.glb").scene;
     mesh.scale.set(0.001, 0.001, 0.001);
@@ -46,35 +47,56 @@ export function Car2(thirdPerson) {
         useRef(null)
     );
 
+    useEffect(() => {
+        addVehicleAPI(vehicleApi);
+    }, [vehicleApi]);
+
+    useEffect(() => {
+        addchassisBody(chassisBody);
+    }, [chassisBody]);
+
+//   useFrame(()=>{
+//         if(chassisBodies.length>=1)
+//             { let position = new THREE.Vector3();
+//                 position.setFromMatrixPosition(chassisBodies[0].current.matrixWorld);
+//                 console.log("EEE",position);
+            
+//                 position.setFromMatrixPosition(chassisBody.current.matrixWorld);
+//                 console.log("FFF",position);
+//             }
+//        console.log("EEEEEEEE",vehicle.position);
+//     })
+
     useControls(vehicleApi, chassisApi);
 
-    useFrame((state) => {
-        if (!thirdPerson) return;
+    // useFrame((state) => {
+    //     if (!thirdPerson) return;
 
-        // Lấy vị trí hiện tại của xe
-        let position = new THREE.Vector3();
-        position.setFromMatrixPosition(chassisBody.current.matrixWorld);
+    //     // Lấy vị trí hiện tại của xe
+    //     let position = new THREE.Vector3();
+    //     position.setFromMatrixPosition(chassisBody.current.matrixWorld);
+    //     console.log(position);
 
-        // Lấy hướng quay hiện tại của xe
-        let quaternion = new THREE.Quaternion();
-        quaternion.setFromRotationMatrix(chassisBody.current.matrixWorld);
+    //     // Lấy hướng quay hiện tại của xe
+    //     let quaternion = new THREE.Quaternion();
+    //     quaternion.setFromRotationMatrix(chassisBody.current.matrixWorld);
 
-        // biến đổi hướng cố định theo hướng quay của xe
-        let wDir = new THREE.Vector3(0, 0, -10); // Hướng về phía trước dọc theo trục z
-        wDir.applyQuaternion(quaternion);
-        wDir.normalize();
+    //     // biến đổi hướng cố định theo hướng quay của xe
+    //     let wDir = new THREE.Vector3(0, 0, -10); // Hướng về phía trước dọc theo trục z
+    //     wDir.applyQuaternion(quaternion);
+    //     wDir.normalize();
 
-        // Tính toán vị trí của camera sao cho luôn theo sau xe
-        let cameraOffset = wDir
-            .clone()
-            .multiplyScalar(-1)
-            .add(new THREE.Vector3(0, 0.3, 0)); // Offset: 10 đơn vị phía sau, 3 đơn vị chiều cao
-        let cameraPosition = position.clone().add(cameraOffset);
+    //     // Tính toán vị trí của camera sao cho luôn theo sau xe
+    //     let cameraOffset = wDir
+    //         .clone()
+    //         .multiplyScalar(-1)
+    //         .add(new THREE.Vector3(0, 0.7, 1)); // Offset: 10 đơn vị phía sau, 3 đơn vị chiều cao
+    //     let cameraPosition = position.clone().add(cameraOffset);
 
-        // Cập nhật vị trí và hướng của camera
-        state.camera.position.copy(cameraPosition);
-        state.camera.lookAt(position);
-    });
+    //     // Cập nhật vị trí và hướng của camera
+    //     state.camera.position.copy(cameraPosition);
+    //     state.camera.lookAt(position);
+    // });
 
     return (
         <group ref={vehicle}>
