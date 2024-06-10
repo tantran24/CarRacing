@@ -8,9 +8,11 @@ Title: Low Poly Tsukuba Circuit
 
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
+import { Physics} from "@react-three/cannon";
 
 export function Circuit(props) {
   const { nodes, materials } = useGLTF('../src/assets/3D/low_poly_tsukuba_circuit.glb')
+  const circuitObjects = []
   return (
     <group {...props} dispose={null}>
       <mesh
@@ -399,8 +401,7 @@ export function Circuit(props) {
         position={[0.032, 0, 0.603]}
         scale={1.11}
       />
-    </group>
+      </group>
   )
 }
-
 useGLTF.preload('/low_poly_tsukuba_circuit.glb')

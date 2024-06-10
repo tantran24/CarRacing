@@ -598,4 +598,3 @@ export function ParisBis(props) {
 }
 useGLTF.preload("./models/tracks/paris-bis.glb");
 
-useGLTF.preload("./models/tracks/paris-bis.glb");

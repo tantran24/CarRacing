@@ -40,8 +40,8 @@ export const useControls = (vehicleApi, chassisApi) => {
             vehicleApi.applyEngineForce(100, 2);
             vehicleApi.applyEngineForce(100, 3);
         } else if (controls.s) {
-            vehicleApi.applyEngineForce(-60, 2);
-            vehicleApi.applyEngineForce(-60, 3);
+            vehicleApi.applyEngineForce(-80, 2);
+            vehicleApi.applyEngineForce(-80, 3);
         } else {
             vehicleApi.applyEngineForce(0, 2);
             vehicleApi.applyEngineForce(0, 3);
