@@ -29,7 +29,6 @@ const MyCamera = () => {
 
 const Home = () => {
 
-
 }
 
 export default Home
