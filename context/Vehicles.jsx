@@ -6,3 +6,5 @@ export const VehicleContext = createContext();
 
 export const useVehicle = () => useContext(VehicleContext);
 
+export const CheckPointContext = createContext();
+

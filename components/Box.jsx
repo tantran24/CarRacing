@@ -1,4 +1,4 @@
-import { VehicleContext, useVehicle } from "../context/Vehicles";
+import { VehicleContext, useVehicle, CheckPointContext } from "../context/Vehicles";
 import { useRef, useContext, useEffect, useState } from "react";
 import * as THREE from "three";
 import { useLoader, useFrame } from "@react-three/fiber";
@@ -8,7 +8,12 @@ export function Box({ type, ...props }) {
     const mesh = useRef();
     const { vehicleAPIs, addVehicleAPI, chassisBodies, addChassisBody } =
         useContext(VehicleContext);
+
+    const {setCheckPoint}  = useContext(CheckPointContext);
+
+
     const [isRemoved, setIsRemoved] = useState(false);
+
     const buffTexture = useLoader(
         TextureLoader,
         "../src/assets/textures/buff.jpg"
@@ -16,6 +21,11 @@ export function Box({ type, ...props }) {
     const nerfTexture = useLoader(
         TextureLoader,
         "../src/assets/textures/nerf.jpg"
+    );
+
+    const checkPointTexture = useLoader(
+        TextureLoader,
+        "../src/assets/textures/checkPoint.jpg"
     );
     const initialPosition = useRef(null);
 
@@ -49,8 +59,11 @@ export function Box({ type, ...props }) {
                         vehicleAPIs[0].applyEngineForce(400, 2);
                         vehicleAPIs[0].applyEngineForce(400, 3);
                     } else if (type === "nerf") {
-                        vehicleAPIs[0].applyEngineForce(-400, 2);
-                        vehicleAPIs[0].applyEngineForce(-400, 3);
+                        vehicleAPIs[0].applyEngineForce(-4800, 2);
+                        vehicleAPIs[0].applyEngineForce(-4800, 3);
+                    }
+                    else if(type === "checkPoint") {
+                        setCheckPoint(boxPosition);
                     }
                 }
             }
@@ -64,16 +77,32 @@ export function Box({ type, ...props }) {
                     initialPosition.current + Math.sin(time) / 5;
                 // mesh.current.position.z += Math.cos(time)/325;
             }
-            mesh.current.rotation.y += 0.03;
+            if (type === "buff" || type === "nerf")
+                mesh.current.rotation.y += 0.03;
+            else
+                mesh.current.rotation.y += 0.2;
+
         }
     });
 
     return (
         <mesh ref={mesh} {...props} castShadow receiveShadow>
-            <boxGeometry args={[0.1, 0.1, 0.1]} />
+            {type === "checkPoint" ? (
+                <planeGeometry args={[0.5, 0.5]} />
+            ) : (
+                <boxGeometry args={[0.1, 0.1, 0.1]} />
+            )}
             <meshStandardMaterial
-                map={type === "buff" ? buffTexture : nerfTexture}
+                map={
+                    type === "buff"
+                        ? buffTexture
+                        : type === "nerf"
+                        ? nerfTexture
+                        : checkPointTexture
+                }
+                transparent={type === "checkPoint"}
+                opacity={type === "checkPoint" ? 0.5 : 1}
             />
         </mesh>
     );
-}
+};

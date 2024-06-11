@@ -17,7 +17,7 @@ export function Car2({
 }) {
     let mesh = useLoader(GLTFLoader, "../src/assets/3D/car.glb").scene;
     mesh.scale.set(0.0003, 0.0003, 0.0003);
-    mesh.position.set(0.11, -0.043, 0.02);
+    mesh.position.set(0.11, -0.009, 0.02);
 
     // shadow
     mesh.traverse((child) => {
@@ -80,8 +80,13 @@ export function Car2({
 
     //             }
     //     })
-
-    useControls(vehicleApi, chassisApi, chassisBody);
+    const getChassisBodyPosition = () => {
+        const position = new THREE.Vector3();
+        position.setFromMatrixPosition(chassisBody.current.matrixWorld);
+        return position;
+    };
+    
+    useControls(vehicleApi, chassisApi, getChassisBodyPosition);
 
     useFrame((state) => {
         if(!thirdPerson) return;
@@ -97,7 +102,7 @@ export function Car2({
         wDir.normalize();
     
         let cameraPosition = position.clone().add(wDir.clone()
-        .multiplyScalar(0.2).add(new THREE.Vector3(0, 0.03, 0)));
+        .multiplyScalar(0.24).add(new THREE.Vector3(0, 0.05, 0)));
         
         wDir.add(new THREE.Vector3(0, 0.1, 0));
         state.camera.position.copy(cameraPosition);
@@ -110,10 +115,10 @@ export function Car2({
                 <primitive object={mesh} rotation-y={Math.PI} />
             </group>
 
-<mesh ref={chassisBody}>
+{/* <mesh ref={chassisBody}>
         <meshBasicMaterial transparent={true} opacity={0.3} />
         <boxGeometry args={chassisBodyArgs} />
-      </mesh>
+      </mesh> */}
       
             <WheelDebug wheelRef={wheels[0]} radius={wheelRadius} />
             <WheelDebug wheelRef={wheels[1]} radius={wheelRadius} />

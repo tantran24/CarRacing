@@ -3,7 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { ParisBis } from "../models/Paris-bis";
 import { Car } from "../models/Car";
 import Loader from "../components/Loader";
-import { PerspectiveCamera, OrbitControls } from "@react-three/drei";
+import { PerspectiveCamera, OrbitControls} from "@react-three/drei";
 import { useHelper } from "@react-three/drei/native";
 import { Physics, usePlane } from "@react-three/cannon";
 import { Sun } from "../components/Sun";
@@ -28,7 +28,6 @@ const GamePlay = () => {
                 <ambientLight intensity={0.5} />
                 {/* Sun and Directional Light */}
                 <Sun />
-
                 <Physics broadphase="SAP" gravity={[0, -2.6, 0]}>
                     <Scene />
                 </Physics>
