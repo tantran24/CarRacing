@@ -46,11 +46,11 @@ export function Box({ type, ...props }) {
                     }, 10000);
 
                     if (type === "buff") {
-                        vehicleAPIs[0].applyEngineForce(1000, 2);
-                        vehicleAPIs[0].applyEngineForce(1000, 3);
+                        vehicleAPIs[0].applyEngineForce(400, 2);
+                        vehicleAPIs[0].applyEngineForce(400, 3);
                     } else if (type === "nerf") {
-                        vehicleAPIs[0].applyEngineForce(-800, 2);
-                        vehicleAPIs[0].applyEngineForce(-800, 3);
+                        vehicleAPIs[0].applyEngineForce(-400, 2);
+                        vehicleAPIs[0].applyEngineForce(-400, 3);
                     }
                 }
             }

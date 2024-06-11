@@ -16,8 +16,8 @@ export function Car2({
     chassisBodies,
 }) {
     let mesh = useLoader(GLTFLoader, "../src/assets/3D/car.glb").scene;
-    mesh.scale.set(0.001, 0.001, 0.001);
-    mesh.position.set(0.37, -0.05, 0.05);
+    mesh.scale.set(0.0003, 0.0003, 0.0003);
+    mesh.position.set(0.11, -0.043, 0.02);
 
     // shadow
     mesh.traverse((child) => {
@@ -35,7 +35,7 @@ export function Car2({
     const width = size.x;
     const height = size.y;
     const front = size.z;
-    const wheelRadius = 0.25 * 0.1;
+    const wheelRadius = 0.25 * 0.06;
 
     const chassisBodyArgs = [width, height, front * 2];
 
@@ -49,7 +49,7 @@ export function Car2({
     );
 
     const [wheels, wheelInfos] = useWheels(
-        width * 2.5,
+        width *2.5 ,
         height,
         front,
         wheelRadius
@@ -81,36 +81,28 @@ export function Car2({
     //             }
     //     })
 
-    useControls(vehicleApi, chassisApi);
+    useControls(vehicleApi, chassisApi, chassisBody);
 
     useFrame((state) => {
-        if (!thirdPerson) return;
-
-        // Lấy vị trí hiện tại của xe
-        let position = new THREE.Vector3(0, 0, 0);
+        if(!thirdPerson) return;
+    
+        let position = new THREE.Vector3(0,0,0);
         position.setFromMatrixPosition(chassisBody.current.matrixWorld);
-        // console.log(position);
-
-        // Lấy hướng quay hiện tại của xe
+    
         let quaternion = new THREE.Quaternion(0, 0, 0, 0);
         quaternion.setFromRotationMatrix(chassisBody.current.matrixWorld);
-
-        // biến đổi hướng cố định theo hướng quay của xe
-        let wDir = new THREE.Vector3(0, 0, -1); // Hướng về phía trước dọc theo trục z
+    
+        let wDir = new THREE.Vector3(0,0,1);
         wDir.applyQuaternion(quaternion);
         wDir.normalize();
-
-        // Tính toán vị trí của camera sao cho luôn theo sau xe
-        let cameraOffset = wDir
-            .clone()
-            .multiplyScalar(-1)
-            .add(new THREE.Vector3(0, 0.3, 0)); // Offset: 10 đơn vị phía sau, 3 đơn vị chiều cao
-        let cameraPosition = position.clone().add(cameraOffset);
-
-        // Cập nhật vị trí và hướng của camera
+    
+        let cameraPosition = position.clone().add(wDir.clone()
+        .multiplyScalar(0.2).add(new THREE.Vector3(0, 0.03, 0)));
+        
+        wDir.add(new THREE.Vector3(0, 0.1, 0));
         state.camera.position.copy(cameraPosition);
         state.camera.lookAt(position);
-    });
+      });
 
     return (
         <group ref={vehicle}>
@@ -118,6 +110,11 @@ export function Car2({
                 <primitive object={mesh} rotation-y={Math.PI} />
             </group>
 
+{/* <mesh ref={chassisBody}>
+        <meshBasicMaterial transparent={true} opacity={0.3} />
+        <boxGeometry args={chassisBodyArgs} />
+      </mesh> */}
+      
             <WheelDebug wheelRef={wheels[0]} radius={wheelRadius} />
             <WheelDebug wheelRef={wheels[1]} radius={wheelRadius} />
             <WheelDebug wheelRef={wheels[2]} radius={wheelRadius} />
