@@ -18,7 +18,7 @@ import { Circuit } from "../models/Circuit";
 import { VehicleContext, CheckPointContext} from "../context/Vehicles";
 import { useBox } from "@react-three/cannon";
 import * as THREE from "three";
-import {Sky, useTexture } from "@react-three/drei";
+import {Sky, useTexture, Stars, Cloud } from "@react-three/drei";
 
 import { Track } from "./Track";
 // import { Wall } from "./Wall";
@@ -36,9 +36,13 @@ export function Scene() {
     
     useEffect(() => {
         function keydownHandler(e) {
-          if (e.key == "k") {
+          if (e.key == "m") {
             setThirdPerson(!thirdPerson); 
             setCameraPosition([3, 5, 14 + Math.random() * 0.01]);
+          }
+          else if (e.key == "k") {
+            setThirdPerson(!thirdPerson); 
+            setCameraPosition([300, 500, 1400 + Math.random() * 0.01]);
           }
         }
     
@@ -53,8 +57,6 @@ export function Scene() {
     const addchassisBody = (body) => {
         setChassisBodies((prevBodies) => [...prevBodies, body]);
     };
-
-    const skyTexture = useTexture("../src/assets/textures/sky.jpg")
 
 
     return (
@@ -73,9 +75,32 @@ export function Scene() {
                 >
                     {/* <Ground /> */}
 
-                    <Sky material-uniforms-tex="value" args={[skyTexture]} /> 
+                    {/* <directionalLight
+                    position={[0, 1.02, 0]} // Position of the light
+                    intensity={1} // Brightness of the light
+                    castShadow // Enable shadow casting
+                    /> */}
 
+                    <Sky distance={100} inclination={0} azimuth={0.25}  turbidity={2} 
+                    rayleigh={7} mieCoefficient={0.07} mieDirectionalG={0.8} 
+                    sunPosition={[1,0,0]}/>
+
+                    <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade />
+                    <Cloud
+                        opacity={0.1}
+                        speed={0.4} // Rotation speed
+                        width={200} // Width of the full cloud
+                        depth={1.5} // Z-dir depth
+                        segments={30} // Number of particles
+                        />
+
+                    <Environment
+                        background
+                        blur={110}
+                        preset="night"
+                    />
                     <Circuit />
+
                     <Car2
                         thirdPerson={thirdPerson}
                         addVehicleAPI={addVehicleAPI}

@@ -43,7 +43,7 @@ export function Car2({
         () => ({
             allowSleep: false,
             args: chassisBodyArgs,
-            mass: 100,
+            mass: 300,
         }),
         useRef(null)
     );
@@ -102,7 +102,7 @@ export function Car2({
         wDir.normalize();
     
         let cameraPosition = position.clone().add(wDir.clone()
-        .multiplyScalar(0.24).add(new THREE.Vector3(0, 0.05, 0)));
+        .multiplyScalar(0.25).add(new THREE.Vector3(0, 0.05, 0)));
         
         wDir.add(new THREE.Vector3(0, 0.1, 0));
         state.camera.position.copy(cameraPosition);
@@ -110,15 +110,16 @@ export function Car2({
       });
 
     return (
+    //     <mesh ref={chassisBody} castShadow receiveShadow>
+    //     <meshBasicMaterial transparent={true} opacity={0.3} />
+    //     <boxGeometry args={chassisBodyArgs} />
+    //   </mesh>
         <group ref={vehicle}>
             <group ref={chassisBody} name="chassisBody">
-                <primitive object={mesh} rotation-y={Math.PI} />
+                <primitive object={mesh} rotation-y={Math.PI} castShadow receiveShadow />
             </group>
 
-{/* <mesh ref={chassisBody}>
-        <meshBasicMaterial transparent={true} opacity={0.3} />
-        <boxGeometry args={chassisBodyArgs} />
-      </mesh> */}
+
       
             <WheelDebug wheelRef={wheels[0]} radius={wheelRadius} />
             <WheelDebug wheelRef={wheels[1]} radius={wheelRadius} />
