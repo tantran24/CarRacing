@@ -6,9 +6,15 @@ Source: https://sketchfab.com/3d-models/low-poly-tsukuba-circuit-d7a6d63a9f87435
 Title: Low Poly Tsukuba Circuit
 */
 
-import React, { useRef } from 'react'
+import React, { useEffect,useRef, useMemo} from 'react'
+import { BoxHelper } from 'three';
 import { useGLTF } from '@react-three/drei'
 import { useConvexPolyhedron, useTrimesh} from "@react-three/cannon";
+import { useFrame } from "@react-three/fiber";
+
+import { Geometry } from "three-stdlib";
+
+
 
 export function Circuit(props) {
   const { nodes, materials } = useGLTF('../src/assets/3D/low_poly_tsukuba_circuit.glb')
@@ -53,11 +59,14 @@ export function Circuit(props) {
         } else if (barrierIndex === 94) {
           material_object = materials.outerbarrier;
         }
+
+        
         const [ref] = useTrimesh(() => ({
           args: [vertices, indices],
-          mass: 500, 
+          mass: 5000, 
           type: 'Static'
         }));
+
 
         return (
           <mesh
@@ -90,14 +99,15 @@ export function Circuit(props) {
         }));
 
         return (
-          <mesh
-            key={i}
-            ref={ref}
-            castShadow
-            receiveShadow
-            geometry={geometry}
-            material={material_object}
-          />
+          <mesh key={i}
+          ref={ref}
+          castShadow
+          receiveShadow
+          geometry={geometry}
+          material={material_object}>
+            <meshNormalMaterial />
+          </mesh>
+            
         );
       })}
       <mesh

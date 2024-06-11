@@ -10,12 +10,12 @@ export const useWheels = (width, height, front, radius) => {
         radius,
         directionLocal: [0, -1, 0],
         axleLocal: [1, 0, 0],
-        suspensionStiffness: 30,
-        suspensionRestLength: 0.1,
+        suspensionStiffness: 60,
+        suspensionRestLength: 0.025,
         frictionSlip: 5,
         dampingRelaxation: 2.3,
         dampingCompression: 4.4,
-        maxSuspensionForce: 100000,
+        maxSuspensionForce: 10000,
         rollInfluence: 0.01,
         maxSuspensionTravel: 0.1,
         customSlidingRotationalSpeed: -30,
@@ -48,10 +48,10 @@ export const useWheels = (width, height, front, radius) => {
     // this function define physic attribute of a wheel
     const propsFunc = () => ({
         collisionFilterGroup: 0,
-        mass: 1,
+        mass: 10,
         shapes: [
             {
-                args: [wheelInfo.radius, wheelInfo.radius, 0.0001, 20],
+                args: [wheelInfo.radius, wheelInfo.radius,  0.0075, 16],
                 rotation: [0, 0, -Math.PI / 2],
                 type: "Cylinder",
             },

@@ -11,13 +11,9 @@ export function Ground(props) {
     }));
 
     return (
-        <mesh ref={ref} receiveShadow>
+        <mesh ref={ref}>
             <planeGeometry args={[5, 5]} />
-            <meshStandardMaterial
-                transparent={true}
-                color={"blue"}
-                opacity={0}
-            />
+            <meshStandardMaterial transparent={true} opacity={0} />
         </mesh>
     );
 }

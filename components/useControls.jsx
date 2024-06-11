@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import * as THREE from "three";
 
-export const useControls = (vehicleApi, chassisApi) => {
+export const useControls = (vehicleApi, chassisApi, chassisBody) => {
     let [controls, setControls] = useState({
         // w: boolean,
         // a: boolean,
@@ -8,6 +9,7 @@ export const useControls = (vehicleApi, chassisApi) => {
         // d: boolean,
         // r: boolean,
     });
+    const [chassisPosition, setChassisPosition] = useState([0, 0, 0]);
 
     useEffect(() => {
         const keyDownPressHandler = (e) => {
@@ -33,12 +35,14 @@ export const useControls = (vehicleApi, chassisApi) => {
     }, []);
 
     useEffect(() => {
+        setChassisPosition(chassisBody.current.position);
+
         if (controls.w) {
             console.log("forward");
             // vehicleApi.applyEngineForce(150, 2);
             // vehicleApi.applyEngineForce(150, 3);
-            vehicleApi.applyEngineForce(100, 2);
-            vehicleApi.applyEngineForce(100, 3);
+            vehicleApi.applyEngineForce(60, 2);
+            vehicleApi.applyEngineForce(60, 3);
         } else if (controls.s) {
             vehicleApi.applyEngineForce(-80, 2);
             vehicleApi.applyEngineForce(-80, 3);
@@ -48,13 +52,13 @@ export const useControls = (vehicleApi, chassisApi) => {
         }
 
         if (controls.a) {
-            vehicleApi.setSteeringValue(0.35, 2);
-            vehicleApi.setSteeringValue(0.35, 3);
+            vehicleApi.setSteeringValue(0.03, 2);
+            vehicleApi.setSteeringValue(0.03, 3);
             vehicleApi.setSteeringValue(-0.1, 0);
             vehicleApi.setSteeringValue(-0.1, 1);
         } else if (controls.d) {
-            vehicleApi.setSteeringValue(-0.35, 2);
-            vehicleApi.setSteeringValue(-0.35, 3);
+            vehicleApi.setSteeringValue(-0.03, 2);
+            vehicleApi.setSteeringValue(-0.03, 3);
             vehicleApi.setSteeringValue(0.1, 0);
             vehicleApi.setSteeringValue(0.1, 1);
         } else {
@@ -62,7 +66,20 @@ export const useControls = (vehicleApi, chassisApi) => {
                 vehicleApi.setSteeringValue(0, i);
             }
         }
-    }, [controls, vehicleApi, chassisApi]);
+        if (controls.r) {
+            let currentPosition = chassisPosition;
+        
+            currentPosition.y += 1;
+        
+            chassisApi.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
+        
+            chassisApi.velocity.set(0, 0, 0);
+            chassisApi.angularVelocity.set(0, 0, 0);
+            chassisApi.rotation.set(0, 0, 0);
+        }
+        
+        
+    }, [controls, vehicleApi, chassisApi, chassisBody]);
 
     return controls;
 };

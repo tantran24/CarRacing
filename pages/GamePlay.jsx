@@ -6,7 +6,7 @@ import Loader from "../components/Loader";
 import { PerspectiveCamera, OrbitControls } from "@react-three/drei";
 import { useHelper } from "@react-three/drei/native";
 import { Physics, usePlane } from "@react-three/cannon";
-
+import { Sun } from "../components/Sun";
 import * as THREE from "three";
 import {
     EffectComposer,
@@ -24,19 +24,10 @@ import { Scene } from "../components/Scene";
 const GamePlay = () => {
     return (
         <section className="w-full h-screen relative">
-            <Canvas className="bg-transparent w-full h-screen">
-                <ambientLight />
-                <directionalLight
-                    position={[10, 50, -30]}
-                    intensity={1}
-                    shadow-bias={-0.0001}
-                    shadow-mapSize={[4096, 4096]}
-                    shadow-camera-left={-300}
-                    shadow-camera-right={300}
-                    shadow-camera-top={300}
-                    shadow-camera-bottom={-300}
-                    castShadow
-                />
+            <Canvas className="bg-transparent w-full h-screen" shadows>
+                <ambientLight intensity={0.5} />
+                {/* Sun and Directional Light */}
+                <Sun />
 
                 <Physics broadphase="SAP" gravity={[0, -2.6, 0]}>
                     <Scene />
