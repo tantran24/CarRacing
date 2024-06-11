@@ -15,7 +15,7 @@ export const useWheels = (width, height, front, radius) => {
         frictionSlip: 5,
         dampingRelaxation: 2.3,
         dampingCompression: 4.4,
-        maxSuspensionForce: 10000,
+        maxSuspensionForce: 5000,
         rollInfluence: 0.01,
         maxSuspensionTravel: 0.1,
         customSlidingRotationalSpeed: -30,

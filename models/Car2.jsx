@@ -14,10 +14,12 @@ export function Car2({
     addVehicleAPI,
     addchassisBody,
     chassisBodies,
+    position, 
+    rotation
 }) {
     let mesh = useLoader(GLTFLoader, "../src/assets/3D/car.glb").scene;
     mesh.scale.set(0.0003, 0.0003, 0.0003);
-    mesh.position.set(0.11, 0, 0.02);
+    mesh.position.set(0.11, -0.009, 0.02);
 
     // shadow
     mesh.traverse((child) => {
@@ -27,7 +29,6 @@ export function Car2({
         }
     });
 
-    const position = [0, 0, 0];
 
     let box = new THREE.Box3().setFromObject(mesh);
     let size = box.getSize(new THREE.Vector3());
@@ -43,7 +44,7 @@ export function Car2({
         () => ({
             allowSleep: false,
             args: chassisBodyArgs,
-            mass: 100,
+            mass: 300,
         }),
         useRef(null)
     );
@@ -80,8 +81,13 @@ export function Car2({
 
     //             }
     //     })
-
-    useControls(vehicleApi, chassisApi, chassisBody);
+    const getChassisBodyPosition = () => {
+        const position = new THREE.Vector3();
+        position.setFromMatrixPosition(chassisBody.current.matrixWorld);
+        return position;
+    };
+    
+    useControls(vehicleApi, chassisApi, getChassisBodyPosition);
 
     useFrame((state) => {
         if(!thirdPerson) return;
@@ -97,7 +103,7 @@ export function Car2({
         wDir.normalize();
     
         let cameraPosition = position.clone().add(wDir.clone()
-        .multiplyScalar(0.2).add(new THREE.Vector3(0, 0.03, 0)));
+        .multiplyScalar(0.25).add(new THREE.Vector3(0, 0.05, 0)));
         
         wDir.add(new THREE.Vector3(0, 0.1, 0));
         state.camera.position.copy(cameraPosition);
@@ -105,15 +111,16 @@ export function Car2({
       });
 
     return (
-        <group ref={vehicle}>
+    //     <mesh ref={chassisBody} castShadow receiveShadow>
+    //     <meshBasicMaterial transparent={true} opacity={0.3} />
+    //     <boxGeometry args={chassisBodyArgs} />
+    //   </mesh>
+        <group ref={vehicle} position={position} rotation={rotation}>
             <group ref={chassisBody} name="chassisBody">
-                <primitive object={mesh} rotation-y={Math.PI} />
+                <primitive object={mesh} rotation-y={Math.PI} castShadow receiveShadow />
             </group>
 
-<mesh ref={chassisBody}>
-        <meshBasicMaterial transparent={true} opacity={0.3} />
-        <boxGeometry args={chassisBodyArgs} />
-      </mesh>
+
       
             <WheelDebug wheelRef={wheels[0]} radius={wheelRadius} />
             <WheelDebug wheelRef={wheels[1]} radius={wheelRadius} />

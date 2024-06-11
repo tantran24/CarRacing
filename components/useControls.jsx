@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useFrame } from "@react-three/fiber";
+import { useEffect, useState, useContext } from "react";
 import * as THREE from "three";
+import { VehicleContext, CheckPointContext} from "../context/Vehicles";
 
-export const useControls = (vehicleApi, chassisApi, chassisBody) => {
+export const useControls = (vehicleApi, chassisApi) => {
     let [controls, setControls] = useState({
         // w: boolean,
         // a: boolean,
@@ -9,7 +11,11 @@ export const useControls = (vehicleApi, chassisApi, chassisBody) => {
         // d: boolean,
         // r: boolean,
     });
-    const [chassisPosition, setChassisPosition] = useState([0, 0, 0]);
+
+    const {checkPoint, setCheckPoint} = useContext(CheckPointContext);
+    // useFrame(()=>{
+    //     console.log(checkPoint);
+    // })
 
     useEffect(() => {
         const keyDownPressHandler = (e) => {
@@ -35,14 +41,12 @@ export const useControls = (vehicleApi, chassisApi, chassisBody) => {
     }, []);
 
     useEffect(() => {
-        setChassisPosition(chassisBody.current.position);
-
         if (controls.w) {
             console.log("forward");
             // vehicleApi.applyEngineForce(150, 2);
             // vehicleApi.applyEngineForce(150, 3);
-            vehicleApi.applyEngineForce(60, 2);
-            vehicleApi.applyEngineForce(60, 3);
+            vehicleApi.applyEngineForce(40, 2);
+            vehicleApi.applyEngineForce(40, 3);
         } else if (controls.s) {
             vehicleApi.applyEngineForce(-80, 2);
             vehicleApi.applyEngineForce(-80, 3);
@@ -52,13 +56,13 @@ export const useControls = (vehicleApi, chassisApi, chassisBody) => {
         }
 
         if (controls.a) {
-            vehicleApi.setSteeringValue(0.03, 2);
-            vehicleApi.setSteeringValue(0.03, 3);
+            vehicleApi.setSteeringValue(0.05, 2);
+            vehicleApi.setSteeringValue(0.05, 3);
             vehicleApi.setSteeringValue(-0.1, 0);
             vehicleApi.setSteeringValue(-0.1, 1);
         } else if (controls.d) {
-            vehicleApi.setSteeringValue(-0.03, 2);
-            vehicleApi.setSteeringValue(-0.03, 3);
+            vehicleApi.setSteeringValue(-0.05, 2);
+            vehicleApi.setSteeringValue(-0.05, 3);
             vehicleApi.setSteeringValue(0.1, 0);
             vehicleApi.setSteeringValue(0.1, 1);
         } else {
@@ -67,19 +71,18 @@ export const useControls = (vehicleApi, chassisApi, chassisBody) => {
             }
         }
         if (controls.r) {
-            let currentPosition = chassisPosition;
-        
-            currentPosition.y += 1;
-        
+       
+            let currentPosition = checkPoint;
+            currentPosition.y += 0.015; 
             chassisApi.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
-        
+
             chassisApi.velocity.set(0, 0, 0);
             chassisApi.angularVelocity.set(0, 0, 0);
-            chassisApi.rotation.set(0, 0, 0);
+            chassisApi.rotation.set(0, -Math.PI, 0);
         }
         
         
-    }, [controls, vehicleApi, chassisApi, chassisBody]);
+    }, [controls, vehicleApi, chassisApi]);
 
     return controls;
 };
