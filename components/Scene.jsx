@@ -47,7 +47,7 @@ export function Scene() {
                     addchassisBody,
                 }}
             >
-                <Ground />
+                {/* <Ground /> */}
                 <Circuit />
                 <Car2
                     thirdPerson={thirdPerson}

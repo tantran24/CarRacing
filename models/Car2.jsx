@@ -35,21 +35,21 @@ export function Car2({
     const width = size.x;
     const height = size.y;
     const front = size.z;
-    const wheelRadius = 0.25 * 0.06;
+    const wheelRadius = 0.25 * 0.02;
 
-    const chassisBodyArgs = [width, height, front * 2];
+    const chassisBodyArgs = [width, height/2, front*1.5 ];
 
     const [chassisBody, chassisApi] = useBox(
         () => ({
             allowSleep: false,
             args: chassisBodyArgs,
-            mass: 200,
+            mass: 100,
         }),
         useRef(null)
     );
 
     const [wheels, wheelInfos] = useWheels(
-        width *2.5 ,
+        width *2 ,
         height,
         front,
         wheelRadius
@@ -110,10 +110,10 @@ export function Car2({
                 <primitive object={mesh} rotation-y={Math.PI} />
             </group>
 
-{/* <mesh ref={chassisBody}>
+<mesh ref={chassisBody}>
         <meshBasicMaterial transparent={true} opacity={0.3} />
         <boxGeometry args={chassisBodyArgs} />
-      </mesh> */}
+      </mesh>
       
             <WheelDebug wheelRef={wheels[0]} radius={wheelRadius} />
             <WheelDebug wheelRef={wheels[1]} radius={wheelRadius} />

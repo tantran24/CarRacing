@@ -41,8 +41,8 @@ export const useControls = (vehicleApi, chassisApi, chassisBody) => {
             console.log("forward");
             // vehicleApi.applyEngineForce(150, 2);
             // vehicleApi.applyEngineForce(150, 3);
-            vehicleApi.applyEngineForce(20, 2);
-            vehicleApi.applyEngineForce(20, 3);
+            vehicleApi.applyEngineForce(60, 2);
+            vehicleApi.applyEngineForce(60, 3);
         } else if (controls.s) {
             vehicleApi.applyEngineForce(-60, 2);
             vehicleApi.applyEngineForce(-60, 3);
@@ -52,13 +52,13 @@ export const useControls = (vehicleApi, chassisApi, chassisBody) => {
         }
 
         if (controls.a) {
-            vehicleApi.setSteeringValue(0.01, 2);
-            vehicleApi.setSteeringValue(0.01, 3);
+            vehicleApi.setSteeringValue(0.03, 2);
+            vehicleApi.setSteeringValue(0.03, 3);
             vehicleApi.setSteeringValue(-0.1, 0);
             vehicleApi.setSteeringValue(-0.1, 1);
         } else if (controls.d) {
-            vehicleApi.setSteeringValue(-0.01, 2);
-            vehicleApi.setSteeringValue(-0.01, 3);
+            vehicleApi.setSteeringValue(-0.03, 2);
+            vehicleApi.setSteeringValue(-0.03, 3);
             vehicleApi.setSteeringValue(0.1, 0);
             vehicleApi.setSteeringValue(0.1, 1);
         } else {
