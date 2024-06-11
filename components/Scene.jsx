@@ -18,7 +18,7 @@ import { Circuit } from "../models/Circuit";
 import { VehicleContext, CheckPointContext} from "../context/Vehicles";
 import { useBox } from "@react-three/cannon";
 import * as THREE from "three";
-import {Sky, useTexture, Stars, Cloud } from "@react-three/drei";
+import {Sky, useTexture, Stars, Cloud, Html} from "@react-three/drei";
 
 import { Track } from "./Track";
 // import { Wall } from "./Wall";
@@ -31,9 +31,8 @@ export function Scene() {
 
     const [chassisBodies, setChassisBodies] = useState([]);
 
-    
     const [checkPoint, setCheckPoint] = useState(new THREE.Vector3());
-    
+
     useEffect(() => {
         function keydownHandler(e) {
           if (e.key == "m") {
@@ -63,65 +62,62 @@ export function Scene() {
         <Suspense fallback={null}>
             <PerspectiveCamera makeDefault position={cameraPosition} fov={40} />
             {thirdPerson ? null: <OrbitControls target={[3, -2, -1]} />}
-            <CheckPointContext.Provider value={{checkPoint, setCheckPoint}}>
+                <CheckPointContext.Provider value={{checkPoint, setCheckPoint}}>
+                    <VehicleContext.Provider
+                        value={{
+                            vehicleAPIs,
+                            addVehicleAPI,
+                            chassisBodies,
+                            addchassisBody,
+                        }}
+                    >
+                        {/* <Ground /> */}
+                        <Sky distance={100} inclination={0} azimuth={0.25}  turbidity={2} 
+                        rayleigh={7} mieCoefficient={0.07} mieDirectionalG={0.8} 
+                        sunPosition={[1,0,0]}/>
 
-                <VehicleContext.Provider
-                    value={{
-                        vehicleAPIs,
-                        addVehicleAPI,
-                        chassisBodies,
-                        addchassisBody,
-                    }}
-                >
-                    {/* <Ground /> */}
+                        <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade />
+                        <Cloud
+                            opacity={0.1}
+                            speed={0.4} // Rotation speed
+                            width={200} // Width of the full cloud
+                            depth={1.5} // Z-dir depth
+                            segments={30} // Number of particles
+                            />
 
-                    {/* <directionalLight
-                    position={[0, 1.02, 0]} // Position of the light
-                    intensity={1} // Brightness of the light
-                    castShadow // Enable shadow casting
-                    /> */}
-
-                    <Sky distance={100} inclination={0} azimuth={0.25}  turbidity={2} 
-                    rayleigh={7} mieCoefficient={0.07} mieDirectionalG={0.8} 
-                    sunPosition={[1,0,0]}/>
-
-                    <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade />
-                    <Cloud
-                        opacity={0.1}
-                        speed={0.4} // Rotation speed
-                        width={200} // Width of the full cloud
-                        depth={1.5} // Z-dir depth
-                        segments={30} // Number of particles
+                        <Environment
+                            background
+                            blur={0}
+                            preset="night"
                         />
+                        <Circuit />
 
-                    <Environment
-                        background
-                        blur={110}
-                        preset="night"
-                    />
-                    <Circuit />
+                        <Car2
+                            thirdPerson={thirdPerson}
+                            addVehicleAPI={addVehicleAPI}
+                            addchassisBody={addchassisBody}
+                            chassisBodies={chassisBodies}
+                            position={[4.4, 0.05, 0.3]}
+                            rotation={[0, -Math.PI / 2.5, 0]}
+                        />
+                        <Box type="buff" position={[0, 0.05, -3]} />
+                        <Box type="buff" position={[8, 0.05, -2]} />
+                        <Box type="nerf" position={[7.16, 0.05, 2]} />
+                        <Box type="buff" position={[0, 0.05, 5]} />
+                        <Box type="nerf" position={[2.4, 0.05, 4]} />
 
-                    <Car2
-                        thirdPerson={thirdPerson}
-                        addVehicleAPI={addVehicleAPI}
-                        addchassisBody={addchassisBody}
-                        chassisBodies={chassisBodies}
-                    />
-                    <Box type="buff" position={[0, 0.05, -3]} />
-                    <Box type="buff" position={[8, 0.05, -2]} />
-                    <Box type="nerf" position={[7.16, 0.05, 2]} />
-                    <Box type="buff" position={[0, 0.05, 5]} />
-                    <Box type="nerf" position={[2.4, 0.05, 4]} />
+                        <Box type="checkPoint" position={[1.8, 0.05, -1]} />
+                        <Box type="checkPoint" position={[8.35, 0.05, -1]} />
+                        <Box type="checkPoint" position={[3.5, 0.05, 7.9]} />
 
-                    <Box type="checkPoint" position={[1.8, 0.05, -1]} />
-                    <Box type="checkPoint" position={[8.35, 0.05, -1]} />
-                    <Box type="checkPoint" position={[3.5, 0.05, 7.9]} />
+                        <Box type="destination" position={[4.4, 0.15, 0.3]} rotation={[0, -Math.PI/2.7 , 0]}/>
 
+                        <Ramp position={[7, 0, 1.62]} scale={[0.5, 0.5, 0.5]} />
 
-                    <Ramp position={[7, 0, 1.62]} scale={[0.5, 0.5, 0.5]} />
-                </VehicleContext.Provider>
-            </CheckPointContext.Provider>
+                       
+                    </VehicleContext.Provider>
+                </CheckPointContext.Provider>
 
         </Suspense>
     );
-}
+};

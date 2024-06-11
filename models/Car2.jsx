@@ -14,6 +14,8 @@ export function Car2({
     addVehicleAPI,
     addchassisBody,
     chassisBodies,
+    position, 
+    rotation
 }) {
     let mesh = useLoader(GLTFLoader, "../src/assets/3D/car.glb").scene;
     mesh.scale.set(0.0003, 0.0003, 0.0003);
@@ -27,7 +29,6 @@ export function Car2({
         }
     });
 
-    const position = [0, 0, 0];
 
     let box = new THREE.Box3().setFromObject(mesh);
     let size = box.getSize(new THREE.Vector3());
@@ -114,7 +115,7 @@ export function Car2({
     //     <meshBasicMaterial transparent={true} opacity={0.3} />
     //     <boxGeometry args={chassisBodyArgs} />
     //   </mesh>
-        <group ref={vehicle}>
+        <group ref={vehicle} position={position} rotation={rotation}>
             <group ref={chassisBody} name="chassisBody">
                 <primitive object={mesh} rotation-y={Math.PI} castShadow receiveShadow />
             </group>
