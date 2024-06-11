@@ -17,7 +17,6 @@ import { VehicleContext } from "../context/Vehicles";
 import { useBox } from "@react-three/cannon";
 
 import { Track } from "./Track";
-import { Ramp } from "./Ramp";
 // import { Wall } from "./Wall";
 // import { MountainEnvironment } from "./MountainEnvironment";
 
