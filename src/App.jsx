@@ -6,7 +6,7 @@ import NavigateBar from '../components/NavigateBar'
 const App = () => {
   return (
     <main className='bg-slate-300/20 h-screen'>
-      <BrowserRouter>
+      <BrowserRouter basename='/'>
 
         <NavigateBar/>
         <Routes>
