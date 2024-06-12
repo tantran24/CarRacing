@@ -25,7 +25,7 @@ import { Track } from "./Track";
 // import { MountainEnvironment } from "./MountainEnvironment";
 
 export function Scene() {
-    const [thirdPerson, setThirdPerson] = useState(false);
+    const [thirdPerson, setThirdPerson] = useState(true);
     const [cameraPosition, setCameraPosition] = useState([-6, 3.9, 6.21]);
     const [vehicleAPIs, setVehicleAPIs] = useState([]);
 
@@ -57,6 +57,10 @@ export function Scene() {
         setChassisBodies((prevBodies) => [...prevBodies, body]);
     };
 
+    const startLineTexture = useLoader(
+        TextureLoader,
+        "../src/assets/textures/startLine.jpg"
+    );
 
     return (
         <Suspense fallback={null}>
@@ -79,9 +83,9 @@ export function Scene() {
                         <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade />
                         {/* <Cloud
                             opacity={0.2}
-                            speed={0.1} // Rotation speed
-                            width={200} // Width of the full cloud
-                            depth={1.5} // Z-dir depth
+                            speed={} // Rotation speed
+                            width={30} // Width of the full cloud
+                            depth={0.5} // Z-dir depth
                             segments={30} // Number of particles
                             /> */}
 
@@ -100,8 +104,13 @@ export function Scene() {
                             // position={[1.6, 0.05, -4.5]}
                             // rotation={[0, -Math.PI / 2.5, 0]}
                             position={[0, 0, 0]}
-
                         />
+
+
+                        <mesh position={[-0.023,0.001,-0.25]} rotation={[-Math.PI / 2, 0, Math.PI / 1.958]}>
+                            <planeGeometry args={[0.335, 0.335]} />
+                            <meshStandardMaterial  map={startLineTexture} />
+                        </mesh>
 
                         <Box type="buff" position={[0, 0.05, -3]} />
                         <Box type="buff" position={[8, 0.05, -2]} />
