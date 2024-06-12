@@ -11,7 +11,7 @@ import { useGLTF } from '@react-three/drei'
 import { useConvexPolyhedron, useTrimesh} from "@react-three/cannon";
 
 export function Circuit(props) {
-  const { nodes, materials } = useGLTF('../src/assets/3D/low_poly_tsukuba_circuit.glb')
+  const { nodes, materials } = useGLTF(import.meta.env.BASE_URL + '../src/assets/3D/low_poly_tsukuba_circuit.glb')
   const list_Barriers = [...Array(28)].map((_, i) => 16 + 2 * i).concat([
     82, 
     90, 

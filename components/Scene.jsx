@@ -9,7 +9,7 @@ import { Car2 } from "../models/Car2";
 import { Ground } from "../components/Ground";
 import { Box } from "./Box";
 import { usePlane } from "@react-three/cannon";
-import { ParisBis } from "../models/Paris-bis";
+// import { ParisBis } from "../models/Paris-bis";
 import { Ramp } from "../models/Ramp";
 import { useLoader, useFrame } from "@react-three/fiber";
 import { TextureLoader } from "three";
