@@ -10,7 +10,7 @@ const App = () => {
 
         <NavigateBar/>
         <Routes>
-          <Route path='/' element={<Home/>}/>
+          <Route path={import.meta.env.BASE_URL} element={<Home/>}/>
           <Route path='/settings' element={<Settings/>}/>
           <Route path='/gameplay' element={<GamePlay/>}/>
         </Routes>
