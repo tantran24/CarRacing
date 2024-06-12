@@ -62,7 +62,7 @@ export function Circuit(props) {
         } else if (barrierIndex === 94) {
           material_object = materials.outerbarrier;
         }
-        const [ref] = useTrimesh(() => ({
+        let [ref] = useTrimesh(() => ({
           args: [vertices, indices],
           mass: 0, 
           type: 'Static'
