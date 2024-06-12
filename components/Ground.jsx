@@ -13,7 +13,7 @@ export function Ground(props) {
     return (
         <mesh ref={ref}>
             <planeGeometry args={[5, 5]} />
-            <meshStandardMaterial transparent={true} opacity={0} />
+            <meshStandardMaterial color={'red'}/>
         </mesh>
     );
 }

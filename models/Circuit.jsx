@@ -6,52 +6,44 @@ Source: https://sketchfab.com/3d-models/low-poly-tsukuba-circuit-d7a6d63a9f87435
 Title: Low Poly Tsukuba Circuit
 */
 
-import React, { useEffect,useRef, useMemo} from 'react'
-import { BoxHelper } from 'three';
+import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
-import { useConvexPolyhedron, useTrimesh} from "@react-three/cannon";
-import { useFrame } from "@react-three/fiber";
-
-import { Geometry } from "three-stdlib";
-
-
+import { useConvexPolyhedron, useTrimesh, useBox, usePlane} from "@react-three/cannon";
 
 export function Circuit(props) {
   const { nodes, materials } = useGLTF('../src/assets/3D/low_poly_tsukuba_circuit.glb')
   const list_Barriers = [...Array(28)].map((_, i) => 16 + 2 * i).concat([82, 90, 94, 96, 102, 126]);
   const list_plane = [78, 86, 92, 100, 122]
-  const [ref] = useTrimesh(() => ({
-    args: [nodes.Object_130.geometry.attributes.position.array, nodes.Object_130.geometry.index.array],
-    type: 'Static',
-    mass:0
+
+  const [ref] = usePlane(() => ({
+    type: "Static", // Static type makes it immovable 
+    rotation:  [-Math.PI / 2, 0, 0.1],
+    position: [3.4, 0.01, 0]
   }));
-
-  const [ref_1] = useTrimesh(() => ({
-    args: [nodes.Object_124.geometry.attributes.position.array, nodes.Object_124.geometry.index.array],
-    type: 'Static',
-    mass:0
-  }))
-
-  const [ref_2] = useTrimesh(() => ({
-    args: [nodes.Object_84.geometry.attributes.position.array, nodes.Object_84.geometry.index.array],
-    type: 'Static',
-    mass:0
-  }))
-
-  const [ref_3] = useTrimesh(() => ({
-    args: [nodes.Object_80.geometry.attributes.position.array, nodes.Object_80.geometry.index.array],
-    type: 'Static',
-    mass:0
-  }))
+  const [ref_1] = usePlane(() => ({
+    type: "Static", // Static type makes it immovable 
+    rotation:  [0, -Math.PI / 2, -Math.PI / 2 + 0.05],
+    position: [2.6, 0.01, 0]
+  }));
+  const [ref_2] = usePlane(() => ({
+    type: "Static", // Static type makes it immovable 
+    arg: [1.5, 11.5],
+    rotation:  [0, -Math.PI / 2, -Math.PI / 2 + 0.05],
+    position: [2.6, 0.01, 0]
+  }));
 
   return (
     <group {...props} dispose={null}>
+      
       {list_Barriers.map((barrierIndex, i) => {
         const geometry = nodes[`Object_${barrierIndex}`].geometry;
-
+        
         const vertices = geometry.attributes.position.array;
         const indices = geometry.index.array;
         var material_object = materials.BarriersTSU
+        if (barrierIndex === 82) {
+          console.log(geometry)
+        }
         if (barrierIndex === 82 || barrierIndex === 96 || barrierIndex === 102 || barrierIndex === 126) {
           material_object = materials.BarriersCONC;
         } else if (barrierIndex === 90 || barrierIndex === 120) {
@@ -59,30 +51,27 @@ export function Circuit(props) {
         } else if (barrierIndex === 94) {
           material_object = materials.outerbarrier;
         }
-
-        
         const [ref] = useTrimesh(() => ({
           args: [vertices, indices],
-          mass: 5000, 
+          mass: 0, 
           type: 'Static'
         }));
-
 
         return (
           <mesh
             key={i}
-            ref={ref}
+            
             castShadow
             receiveShadow
             geometry={geometry}
-            material={material_object}
-          />
+            material={material_object} >
+            </mesh>
+          
         );
       })}
       
       {list_plane.map((planeIndex, i) => {
         const geometry = nodes[`Object_${planeIndex}`].geometry;
-
         const vertices = geometry.attributes.position.array;
         const indices = geometry.index.array;
         var material_object = materials.Asph
@@ -97,19 +86,18 @@ export function Circuit(props) {
           mass: 0, 
           type: 'Static'
         }));
-
         return (
-          <mesh key={i}
-          ref={ref}
-          castShadow
-          receiveShadow
-          geometry={geometry}
-          material={material_object}>
-            <meshNormalMaterial />
-          </mesh>
-            
+          <mesh
+            key={i}
+            castShadow
+            receiveShadow
+            geometry={geometry}
+            material={material_object} >
+              
+            </mesh>
         );
       })}
+      
       <mesh
         castShadow
         receiveShadow
@@ -165,14 +153,12 @@ export function Circuit(props) {
         material={materials.Material__32}
       />
       <mesh
-        ref = {ref_3}
         castShadow
         receiveShadow
         geometry={nodes.Object_80.geometry}
         material={materials.Grass}
       />
       <mesh
-        ref = {ref_2}
         castShadow
         receiveShadow
         geometry={nodes.Object_84.geometry}
@@ -241,7 +227,6 @@ export function Circuit(props) {
         material={materials.Foilage}
       />
       <mesh
-        ref ={ref_1}
         castShadow
         receiveShadow
         geometry={nodes.Object_124.geometry}
@@ -253,17 +238,31 @@ export function Circuit(props) {
         geometry={nodes.Object_128.geometry}
         material={materials.TSUKUB1}
       />
-      <mesh
-        ref = {ref}
-        castShadow
-        receiveShadow
-        geometry={nodes.Object_130.geometry}
-        material={materials.Asph}
-        position={[0.032, 0, 0.603]}
-        scale={1.11}
-      />
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0,0,0]}>
+              <planeGeometry args={[2, 13]} />
+              <meshStandardMaterial color={'red'} opacity={0} transparent={true}/>
+      </mesh>
+
+      <mesh rotation={[-Math.PI / 2, -0.01, 0]} position={[2.2,0,4]}>
+              <planeGeometry args={[1.5, 2]} />
+              <meshStandardMaterial color={'blue'} opacity={0} transparent={true} />
+      </mesh>
+      <mesh rotation={[-Math.PI / 2, 0, -0.4]} position={[5,0,5]}>
+              <planeGeometry args={[3, 20]} />
+              <meshStandardMaterial color={'green'} opacity={0} transparent={true} />
+      </mesh>
+
+      <mesh rotation={[-Math.PI / 2 + 0.02, -0.01, -0.4]} position={[9.8 ,0.01,-4.43]}>
+              <planeGeometry args={[1.2, 8]} />
+        <meshStandardMaterial color={'orange'} transparent={true} opacity={0}/>
+      </mesh>
+
+      <mesh ref={ref} >
+              <planeGeometry args={[1.2, 8]} />
+              <meshStandardMaterial color={'purple'} transparent={true}  opacity={0} />
+      </mesh>
+      
     </group>
   )
 }
-
 useGLTF.preload('/low_poly_tsukuba_circuit.glb')

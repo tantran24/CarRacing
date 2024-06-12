@@ -4,6 +4,7 @@ import { useBox } from "@react-three/cannon";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
+
 export function Car({ speed, modelPath }) {
     const car = useGLTF(modelPath);
     const bbox = new THREE.Box3().setFromObject(car.scene);
