@@ -13,7 +13,16 @@ import { useConvexPolyhedron, useTrimesh} from "@react-three/cannon";
 export function Circuit(props) {
   const { nodes, materials } = useGLTF('../src/assets/3D/low_poly_tsukuba_circuit.glb')
   const list_Barriers = [...Array(28)].map((_, i) => 16 + 2 * i).concat([82, 90, 94, 96, 102, 126]);
-  const list_plane = [78, 86, 92, 100, 122]
+  const list_plane = 
+  [
+    78, 
+    86, 
+    92, 
+    100, 
+    122,
+    108
+  ]
+  
   const [ref] = useTrimesh(() => ({
     args: [nodes.Object_130.geometry.attributes.position.array, nodes.Object_130.geometry.index.array],
     type: 'Static',
@@ -55,7 +64,7 @@ export function Circuit(props) {
         }
         const [ref] = useTrimesh(() => ({
           args: [vertices, indices],
-          mass: 500, 
+          mass: 0, 
           type: 'Static'
         }));
 
@@ -73,14 +82,15 @@ export function Circuit(props) {
       
       {list_plane.map((planeIndex, i) => {
         const geometry = nodes[`Object_${planeIndex}`].geometry;
-
+        let position = [0,0,0];
         const vertices = geometry.attributes.position.array;
         const indices = geometry.index.array;
         var material_object = materials.Asph
-        if (planeIndex === 100 || planeIndex === 122) {
+        if (planeIndex === 100 || planeIndex === 122 ||planeIndex === 108) {
           material_object = materials.Asphalt;
         } else if (planeIndex === 78) {
           material_object = materials.ASPH2;
+          position=[0, 0.1, 0];
         }
 
         const [ref] = useTrimesh(() => ({
@@ -97,6 +107,7 @@ export function Circuit(props) {
             receiveShadow
             geometry={geometry}
             material={material_object}
+            position={position}
           />
         );
       })}
@@ -194,12 +205,7 @@ export function Circuit(props) {
         geometry={nodes.Object_106.geometry}
         material={materials.Forest}
       />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Object_108.geometry}
-        material={materials.Asphalt}
-      />
+      
       <mesh
         castShadow
         receiveShadow
@@ -243,7 +249,7 @@ export function Circuit(props) {
         geometry={nodes.Object_128.geometry}
         material={materials.TSUKUB1}
       />
-      <mesh
+      {/* <mesh
         ref = {ref}
         castShadow
         receiveShadow
@@ -251,7 +257,8 @@ export function Circuit(props) {
         material={materials.Asph}
         position={[0.032, 0, 0.603]}
         scale={1.11}
-      />
+      /> */}
+      
     </group>
   )
 }

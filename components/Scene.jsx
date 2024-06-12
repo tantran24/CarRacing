@@ -25,7 +25,7 @@ import { Track } from "./Track";
 // import { MountainEnvironment } from "./MountainEnvironment";
 
 export function Scene() {
-    const [thirdPerson, setThirdPerson] = useState(true);
+    const [thirdPerson, setThirdPerson] = useState(false);
     const [cameraPosition, setCameraPosition] = useState([-6, 3.9, 6.21]);
     const [vehicleAPIs, setVehicleAPIs] = useState([]);
 
@@ -77,13 +77,13 @@ export function Scene() {
                         sunPosition={[1,0,0]}/>
 
                         <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade />
-                        <Cloud
-                            opacity={0.1}
-                            speed={0.4} // Rotation speed
+                        {/* <Cloud
+                            opacity={0.2}
+                            speed={0.1} // Rotation speed
                             width={200} // Width of the full cloud
                             depth={1.5} // Z-dir depth
                             segments={30} // Number of particles
-                            />
+                            /> */}
 
                         <Environment
                             background
@@ -97,9 +97,12 @@ export function Scene() {
                             addVehicleAPI={addVehicleAPI}
                             addchassisBody={addchassisBody}
                             chassisBodies={chassisBodies}
-                            position={[4.4, 0.05, 0.3]}
-                            rotation={[0, -Math.PI / 2.5, 0]}
+                            // position={[1.6, 0.05, -4.5]}
+                            // rotation={[0, -Math.PI / 2.5, 0]}
+                            position={[0, 0, 0]}
+
                         />
+
                         <Box type="buff" position={[0, 0.05, -3]} />
                         <Box type="buff" position={[8, 0.05, -2]} />
                         <Box type="nerf" position={[7.16, 0.05, 2]} />
