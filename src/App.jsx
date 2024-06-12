@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import {Route, BrowserRouter, Routes} from 'react-router-dom'
+import {Route, HashRouter, Routes} from 'react-router-dom'
 import {Home, Settings, GamePlay} from '/pages'
 import NavigateBar from '../components/NavigateBar'
 
 const App = () => {
   return (
     <main className='bg-slate-300/20 h-screen'>
-      <BrowserRouter basename='/'>
+      <HashRouter>
 
         <NavigateBar/>
         <Routes>
@@ -14,7 +14,7 @@ const App = () => {
           <Route path='/settings' element={<Settings/>}/>
           <Route path='/gameplay' element={<GamePlay/>}/>
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </main>
   )
 }
