@@ -1,20 +1,20 @@
 import { useState } from 'react'
-import {Route, HashRouter, Routes} from 'react-router-dom'
+import {Route, BrowserRouter, Routes} from 'react-router-dom'
 import {Home, Settings, GamePlay} from '/pages'
 import NavigateBar from '../components/NavigateBar'
 
 const App = () => {
   return (
     <main className='bg-slate-300/20 h-screen'>
-      <HashRouter>
+      <BrowserRouter>
 
         <NavigateBar/>
         <Routes>
-          <Route path={import.meta.env.BASE_URL} element={<Home/>}/>
+          <Route path='/' element={<Home/>}/>
           <Route path='/settings' element={<Settings/>}/>
           <Route path='/gameplay' element={<GamePlay/>}/>
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
     </main>
   )
 }
