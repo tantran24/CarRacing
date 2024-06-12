@@ -30,6 +30,7 @@ export function Car2({
     });
 
 
+
     let box = new THREE.Box3().setFromObject(mesh);
     let size = box.getSize(new THREE.Vector3());
     let center = box.getCenter(new THREE.Vector3());
@@ -48,6 +49,12 @@ export function Car2({
         }),
         useRef(null)
     );
+
+    useEffect(()=>{
+        let currentPosition = new THREE.Vector3(position[0], position[1], position[2]);
+        // let currentPosition = {x: position[0], y: position[1], z: position[2]};
+        chassisApi.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
+    },[]);
 
     const [wheels, wheelInfos] = useWheels(
         width *2 ,
@@ -86,7 +93,9 @@ export function Car2({
         position.setFromMatrixPosition(chassisBody.current.matrixWorld);
         return position;
     };
-    
+    // useFrame(()=>{
+    //     console.log(getChassisBodyPosition());
+    // })
     useControls(vehicleApi, chassisApi, getChassisBodyPosition);
 
     useFrame((state) => {
@@ -115,7 +124,7 @@ export function Car2({
     //     <meshBasicMaterial transparent={true} opacity={0.3} />
     //     <boxGeometry args={chassisBodyArgs} />
     //   </mesh>
-        <group ref={vehicle} position={position} rotation={rotation}>
+        <group ref={vehicle} rotation={rotation}>
             <group ref={chassisBody} name="chassisBody">
                 <primitive object={mesh} rotation-y={Math.PI} castShadow receiveShadow />
             </group>

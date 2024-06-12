@@ -8,42 +8,53 @@ Title: Low Poly Tsukuba Circuit
 
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
-import { useConvexPolyhedron, useTrimesh, useBox, usePlane} from "@react-three/cannon";
+import { useConvexPolyhedron, useTrimesh, useBox, usePlane } from "@react-three/cannon";
 
 export function Circuit(props) {
   const { nodes, materials } = useGLTF('../src/assets/3D/low_poly_tsukuba_circuit.glb')
   const list_Barriers = [...Array(28)].map((_, i) => 16 + 2 * i).concat([82, 90, 94, 96, 102, 126]);
-  const list_plane = [78, 86, 92, 100, 122]
+  const list_plane = 
+  [
+    78, 
+    86, 
+    92, 
+    100, 
+    122,
+    108
+  ]
+  
+  const [ref] = useTrimesh(() => ({
+    args: [nodes.Object_130.geometry.attributes.position.array, nodes.Object_130.geometry.index.array],
+    type: 'Static',
+    mass:0
+  }));
 
-  const [ref] = usePlane(() => ({
-    type: "Static", // Static type makes it immovable 
-    rotation:  [-Math.PI / 2, 0, 0.1],
-    position: [3.4, 0.01, 0]
-  }));
-  const [ref_1] = usePlane(() => ({
-    type: "Static", // Static type makes it immovable 
-    rotation:  [0, -Math.PI / 2, -Math.PI / 2 + 0.05],
-    position: [2.6, 0.01, 0]
-  }));
-  const [ref_2] = usePlane(() => ({
-    type: "Static", // Static type makes it immovable 
-    arg: [1.5, 11.5],
-    rotation:  [0, -Math.PI / 2, -Math.PI / 2 + 0.05],
-    position: [2.6, 0.01, 0]
-  }));
+  const [ref_1] = useTrimesh(() => ({
+    args: [nodes.Object_124.geometry.attributes.position.array, nodes.Object_124.geometry.index.array],
+    type: 'Static',
+    mass:0
+  }))
+
+  const [ref_2] = useTrimesh(() => ({
+    args: [nodes.Object_84.geometry.attributes.position.array, nodes.Object_84.geometry.index.array],
+    type: 'Static',
+    mass:0
+  }))
+
+  const [ref_3] = useTrimesh(() => ({
+    args: [nodes.Object_80.geometry.attributes.position.array, nodes.Object_80.geometry.index.array],
+    type: 'Static',
+    mass:0
+  }))
 
   return (
     <group {...props} dispose={null}>
-      
       {list_Barriers.map((barrierIndex, i) => {
         const geometry = nodes[`Object_${barrierIndex}`].geometry;
         
         const vertices = geometry.attributes.position.array;
         const indices = geometry.index.array;
         var material_object = materials.BarriersTSU
-        if (barrierIndex === 82) {
-          console.log(geometry)
-        }
         if (barrierIndex === 82 || barrierIndex === 96 || barrierIndex === 102 || barrierIndex === 126) {
           material_object = materials.BarriersCONC;
         } else if (barrierIndex === 90 || barrierIndex === 120) {
@@ -72,13 +83,15 @@ export function Circuit(props) {
       
       {list_plane.map((planeIndex, i) => {
         const geometry = nodes[`Object_${planeIndex}`].geometry;
+        let position = [0,0,0];
         const vertices = geometry.attributes.position.array;
         const indices = geometry.index.array;
         var material_object = materials.Asph
-        if (planeIndex === 100 || planeIndex === 122) {
+        if (planeIndex === 100 || planeIndex === 122 ||planeIndex === 108) {
           material_object = materials.Asphalt;
         } else if (planeIndex === 78) {
           material_object = materials.ASPH2;
+          position=[0, 0.1, 0];
         }
 
         const [ref] = useTrimesh(() => ({
@@ -92,9 +105,9 @@ export function Circuit(props) {
             castShadow
             receiveShadow
             geometry={geometry}
-            material={material_object} >
-              
-            </mesh>
+            material={material_object}
+            position={position}
+          />
         );
       })}
       
@@ -190,12 +203,7 @@ export function Circuit(props) {
         geometry={nodes.Object_106.geometry}
         material={materials.Forest}
       />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Object_108.geometry}
-        material={materials.Asphalt}
-      />
+      
       <mesh
         castShadow
         receiveShadow
@@ -238,29 +246,15 @@ export function Circuit(props) {
         geometry={nodes.Object_128.geometry}
         material={materials.TSUKUB1}
       />
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0,0,0]}>
-              <planeGeometry args={[2, 13]} />
-              <meshStandardMaterial color={'red'} opacity={0} transparent={true}/>
-      </mesh>
-
-      <mesh rotation={[-Math.PI / 2, -0.01, 0]} position={[2.2,0,4]}>
-              <planeGeometry args={[1.5, 2]} />
-              <meshStandardMaterial color={'blue'} opacity={0} transparent={true} />
-      </mesh>
-      <mesh rotation={[-Math.PI / 2, 0, -0.4]} position={[5,0,5]}>
-              <planeGeometry args={[3, 20]} />
-              <meshStandardMaterial color={'green'} opacity={0} transparent={true} />
-      </mesh>
-
-      <mesh rotation={[-Math.PI / 2 + 0.02, -0.01, -0.4]} position={[9.8 ,0.01,-4.43]}>
-              <planeGeometry args={[1.2, 8]} />
-        <meshStandardMaterial color={'orange'} transparent={true} opacity={0}/>
-      </mesh>
-
-      <mesh ref={ref} >
-              <planeGeometry args={[1.2, 8]} />
-              <meshStandardMaterial color={'purple'} transparent={true}  opacity={0} />
-      </mesh>
+      {/* <mesh
+        ref = {ref}
+        castShadow
+        receiveShadow
+        geometry={nodes.Object_130.geometry}
+        material={materials.Asph}
+        position={[0.032, 0, 0.603]}
+        scale={1.11}
+      /> */}
       
     </group>
   )
