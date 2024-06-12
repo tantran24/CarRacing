@@ -83,9 +83,9 @@ export function Scene() {
                         <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade />
                         {/* <Cloud
                             opacity={0.2}
-                            speed={0.1} // Rotation speed
-                            width={200} // Width of the full cloud
-                            depth={1.5} // Z-dir depth
+                            speed={} // Rotation speed
+                            width={30} // Width of the full cloud
+                            depth={0.5} // Z-dir depth
                             segments={30} // Number of particles
                             /> */}
 

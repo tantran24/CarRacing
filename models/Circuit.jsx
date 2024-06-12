@@ -12,7 +12,14 @@ import { useConvexPolyhedron, useTrimesh} from "@react-three/cannon";
 
 export function Circuit(props) {
   const { nodes, materials } = useGLTF('../src/assets/3D/low_poly_tsukuba_circuit.glb')
-  const list_Barriers = [...Array(28)].map((_, i) => 16 + 2 * i).concat([82, 90, 94, 96, 102, 126]);
+  const list_Barriers = [...Array(28)].map((_, i) => 16 + 2 * i).concat([
+    82, 
+    90, 
+    94, 
+    96, 
+    102, 
+    126
+  ]);
   const list_plane = 
   [
     78, 
@@ -62,7 +69,7 @@ export function Circuit(props) {
         } else if (barrierIndex === 94) {
           material_object = materials.outerbarrier;
         }
-        let [ref] = useTrimesh(() => ({
+        const [ref] = useTrimesh(() => ({
           args: [vertices, indices],
           mass: 0, 
           type: 'Static'
