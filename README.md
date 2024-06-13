@@ -3,8 +3,8 @@
 **CarRacing** is a thrilling 3D car racing game built using **[ReactJS][React-url]**, **[Three.js][Three-url]**, and **[CannonJS][Cannon-url]**. Race against time and enjoy an immersive experience with realistic physics and dynamic camera views!
 
 <div display='grid' grid-template-columns: repeat(2, 1fr); grid-gap: 10px;>
-   <img src='./images/image_1.PNG' style="width: 45%; height:300px">
-   <img src='./images/image_2.PNG' style="width: 45%; height:300px">
+   <img src='./images/image_1.PNG' style="width: 50%; height:300px">
+   <img src='./images/image_2.PNG' style="width: 50%; height:300px">
 </div>
 
 # 📸 Video
