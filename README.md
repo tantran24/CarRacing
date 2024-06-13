@@ -1,13 +1,45 @@
 # 🚗🏁 CarRacing 🏁🚗
 
-**CarRacing** is a thrilling 3D car racing game built using **React.js**, **Three.js**, and **Cannon.js**. Race against time and enjoy an immersive experience with realistic physics and dynamic camera views!
+**CarRacing** is a thrilling 3D car racing game built using **[ReactJS][React-url]**, **[Three.js][Three-url]**, and **[CannonJS][Cannon-url]**. Race against time and enjoy an immersive experience with realistic physics and dynamic camera views!
+
+<table style="width: 100%;">
+  <tr>
+    <td style="width: 50%; padding-right: 5%; text-align: center;">
+      <img src='./images/image_1.PNG' style="width: 100%; height:300px">
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 50%; padding-right: 5%; text-align: center;">
+      <img src='./images/image_2.PNG' style="width: 100%; height:300px">
+    </td>
+  </tr>
+</table>
+
+# 📸 Video
+
+# Table of Contents
+
+- [🌟 Features](#-features)
+- [📋 Requirements](#-requirements)
+- [🛠️ Installation](#-installation)
+- [🎮 Usage](#-usage)
+- [🤝 Contributors](#-contributors)
+- [📬 Contact](#-contact)
+- [📦 Dependencies](#-dependencies)
 
 ## 🌟 Features
 
-- **🌐 3D Graphics**: Stunning visuals powered by Three.js.
-- **💥 Physics Engine**: Realistic car physics using Cannon.js.
+- **🌐 3D Graphics**: Stunning visuals powered by **[Three.js][Three-url]**.
+- **💥 Physics Engine**: Realistic car physics using **[CannonJS][Cannon-url]**.
 - **🎥 Camera Views**: Switch between different camera perspectives.
 - **🕹️ Simple Controls**: Intuitive car controls with keyboard inputs.
+
+## 📋 Requirements
+
+- **[![NPM][NPM]][NPM-url]**
+- [![Cannon][Cannon.js]][Cannon-url]
+- [![Three.js][Three.js]][Three-url]
+- [![React][React.js]][react-url]
 
 ## 🛠️ Installation
 
@@ -15,18 +47,19 @@ Follow these steps to install and run the project locally:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-repo/CarRacing.git
+   git clone https://github.com/tantran24/CarRacing.git
    cd CarRacing
    ```
 2. **Install the dependencies:**
-   '''bash
+
+   ```bash
    npm install
-   '''
+   ```
 
 3. **Start the development server:**
-   '''bash
+   ```bash
    npm run dev
-   '''
+   ```
 
 ## 🎮 Usage
 
@@ -40,39 +73,40 @@ Use the following keyboard controls to play the game:
 - **K**: Change Camera View
 - **M**: Change Camera View
 
-## 🤝 Contributing
+## 🤝 Contributors
 
-We welcome contributions from the community! To contribute, please follow these steps:
-
-1. Fork the repository.
-1. Create a new branch: git checkout -b my-feature-branch.
-1. Make your changes and commit them: git commit -m 'Add some feature'.
-1. Push to the branch: git push origin my-feature-branch.
-1. Create a pull request.
-1. Please ensure your code adheres to our coding standards and includes proper documentation.
-
-## 📜 License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
+| **Members**                                          |                        **Email**                        |
+| :--------------------------------------------------- | :-----------------------------------------------------: |
+| [Trần Duy Tân](https://github.com/tantran24)         | [21522576@gm.uit.edu.vn](mailto:21522576@gm.uit.edu.vn) |
+| [Đinh Vũ Minh Nhật](https://github.com/NhatDinh2411) | [21522414@gm.uit.edu.vn](mailto:21522414@gm.uit.edu.vn) |
+| [Đào Nam Thuận](https://github.com/daonamthuan)      | [21522649@gm.uit.edu.vn](mailto:21522649@gm.uit.edu.vn) |
 
 ## 📬 Contact
 
-For any inquiries or support, please contact our team at support@example.com or visit our GitHub repository.
+For any questions or support, please contact our team any team member's email or visit our GitHub repository.
 
 ## 📦 Dependencies
 
 The project relies on the following dependencies:
 
-- **@react-spring/three**: ^9.7.3
-- **@react-three/drei**: ^9.105.4
-- **@react-three/fiber**: ^8.16.2
-- **@react-three/postprocessing**: ^2.16.2
-- **@react-three/rapier**: ^1.3.1
-- **@react-three/cannon**: ^6.6.0
-- **react**: ^18.2.0
-- **react-dom:** ^18.2.0
-- **react-router-dom**: ^6.22.3
+- **[@react][React-url]**: A JavaScript library for building user interfaces.
+- **[@react-spring/three](https://www.npmjs.com/package/@react-spring/three)**: React-spring bindings for three.js.
+
+- **[@react-three/drei](https://www.npmjs.com/package/@react-three/drei)**: A growing collection of useful helpers and abstractions for react-three-fiber.
+- **[@react-three/fiber](https://www.npmjs.com/package/@react-three/fiber)**: A React renderer for three.js.
+- **[@react-three/postprocessing](https://www.npmjs.com/package/@react-three/postprocessing)**: Postprocessing integration for react-three-fiber.
+- **[@react-three/rapier](https://www.npmjs.com/package/@react-three/rapier)**: Rapier physics engine integration for react-three-fiber.
+- **[@react-three/cannon](https://www.npmjs.com/package/@react-three/cannon)**: Cannon.js physics integration for react-three-fiber.
 
 ---
 
 ## Enjoy racing! 🚗💨
+
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[Three.js]: https://img.shields.io/badge/-ThreeJS-049EF4?logo=threedotjs&logoColor=black&style=for-the-badge
+[Three-url]: https://threejs.org/
+[Cannon.js]: https://img.shields.io/badge/CannonJS-35495E?style=for-the-badge
+[Cannon-url]: https://schteppe.github.io/cannon.js/
+[NPM]: https://img.shields.io/badge/npm-35495E?logo=npm&style=for-the-badge
+[NPM-url]: https://www.npmjs.com/
